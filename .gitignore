@@ -2,7 +2,6 @@
 .idea/
 .cache/
 *.pdf
-.vscode/
 branding/locale/entities.specific.adoc
 branding/pdf/entities.adoc
 site.yml
@@ -17,5 +16,5 @@ package.json
 antora.yml
 # Mac
 **/.DS_Store
-Release.key. *
+Release.key.*
 

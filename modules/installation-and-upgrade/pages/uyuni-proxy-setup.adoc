@@ -18,7 +18,7 @@ This service forwards Salt interactions to the {productname} Server.
 [NOTE]
 .Proxy Chains
 ====
-It is possible to arrange Salt proxies in a chain.
+It is possible to arrange proxies in a chain.
 In such a case, the upstream proxy is named `parent`.
 ====
 
@@ -178,7 +178,7 @@ cobbler sync
 
 It can also be done after a change within {cobbler} that needs to be synchronized immediately.
 Otherwise {cobbler} synchronization will run automatically when needed.
-For more information about PXE booting, see xref:client-configuration:autoinst-pxeboot.adoc[Install via the Network].
+//For more information about PXE booting, see xref:client-configuration:autoinst-pxeboot.adoc[Install via the Network].
 
 
 
@@ -222,8 +222,8 @@ Consider copying important or manually created data to a central place that can 
 
 . Shut down the proxy.
 
-. Install a new {productname} Proxy.
-    For installation instructions, see xref:install-proxy-unified.adoc[Proxy Installation].
+. Deploy a new {productname} Proxy.
+// For installation instructions, see xref:install-proxy-unified.adoc[Proxy Installation].
 
 . In the {productname} {webui}, select the newly installed {productname} Proxy, and delete it from the systems list.
 

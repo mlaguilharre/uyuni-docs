@@ -15,7 +15,6 @@ endif::[]
 
 ifeval::[{suma-content} == true]
 {productname} supports {ubuntu} 20.04 LTS and 22.04 LTS clients using {salt}.
-//For information about registering Salt clients running {ubuntu} 18.04 LTS, see xref:client-configuration:clients-ubuntu-old.adoc[].
 endif::[]
 
 Bootstrapping is supported for starting {ubuntu} clients and performing initial state runs such as setting repositories and performing profile updates.
@@ -42,8 +41,8 @@ The products you need for this procedure are:
 |===
 
 | OS Version     | Product Name
-| {ubuntu} 20.04 | Ubuntu 20.04
 | {ubuntu} 22.04 | Ubuntu 22.04
+| {ubuntu} 20.04 | Ubuntu 20.04
 |===
 
 include::snippets/addchannels_vendor_webui.adoc[]
@@ -57,8 +56,8 @@ The channels you need for this procedure are:
 |===
 
 | OS Version     | Base Channel
-| {ubuntu} 20.04 | ubuntu-2004-amd64-main-amd64
 | {ubuntu} 22.04 | ubuntu-2204-amd64-main-amd64
+| {ubuntu} 20.04 | ubuntu-2004-amd64-main-amd64
 |===
 
 include::snippets/addchannels_vendor_cli.adoc[]
@@ -76,8 +75,8 @@ The channels you need for this procedure are:
 
 | OS Version | Base Channel | Main Channel | Updates Channel | Security Channel | Client Channel
 
-| {ubuntu} 20.04 | ubuntu-2004-pool-amd64-uyuni | ubuntu-2004-amd64-main-uyuni | ubuntu-2004-amd64-main-updates-uyuni | ubuntu-2004-amd64-main-security-uyuni | ubuntu-2004-amd64-uyuni-client
 | {ubuntu} 22.04 | ubuntu-2204-pool-amd64-uyuni | ubuntu-2204-amd64-main-uyuni | ubuntu-2204-amd64-main-updates-uyuni | ubuntu-2204-amd64-main-security-uyuni | ubuntu-2204-amd64-uyuni-client
+| {ubuntu} 20.04 | ubuntu-2004-pool-amd64-uyuni | ubuntu-2004-amd64-main-uyuni | ubuntu-2004-amd64-main-updates-uyuni | ubuntu-2004-amd64-main-security-uyuni | ubuntu-2004-amd64-uyuni-client
 |===
 
 Version 20.04 also requires the Universe channels:
@@ -105,6 +104,78 @@ You need all the new channels fully synchronized before bootstrapping any Ubuntu
 endif::[]
 
 
+== Mirror Ubuntu ESM packages
+
+Canonical provides https://ubuntu.com/security/esm[Expanded Security Maintenance] (**ESM**) packages for https://ubuntu.com/pro[Ubuntu Pro] users and customers. 
+These packages offer longer maintenance (_10 to 12 years_) for several operating system components and selected applications.
+
+These repositories can also be synchronized within {productname} if you extract the required **GPG keys** and your personal **Bearer Token** from a system registered to Ubuntu Pro.
+
+
+=== Extract GPG keys and Bearer Token
+
+Register an Ubuntu host with Ubuntu Pro. 
+You will find your personal registration token in the https://ubuntu.com/pro/dashboard[Ubuntu Pro Dashbaord]. 
+An https://login.ubuntu.com/[Ubuntu One acconut] is required for this.
+
+----
+sudo apt-get install ubuntu-advantage-tools
+sudo pro attach <perosnal_token>
+----
+
+After registration, you will find the Bearer Token in the file `/etc/apt/auth.conf.d/90ubuntu-advantage`:
+
+----
+machine esm.ubuntu.com/apps/ubuntu/ login bearer password <token>  # ubuntu-pro-client
+machine esm.ubuntu.com/infra/ubuntu/ login bearer password <token>  # ubuntu-pro-client
+----
+
+[NOTE]
+====
+One dedicated bearer token is used per repository.
+====
+
+Configure the following repositories within {productname}:
+
+=== Configure Ubuntu ESM repositories
+
+Use the following URLs for creating the repositories:
+
+[[ubuntu-esm-repositories]]
+[cols="1,1", options="header"]
+.Ubuntu ESM repositories
+|===
+
+| URL     | Description
+| https://bearer:<token>@esm.ubuntu.com/infra/ubuntu/dists/<release>-infra-updates/main/binary-<arch>/ | Operating system functional updates
+| https://bearer:<token>@esm.ubuntu.com/infra/ubuntu/dists/<release>-infra-security/main/binary-<arch>/ | Operating system security updates
+| https://bearer:<token>@esm.ubuntu.com/apps/ubuntu/dists/<release>-apps-updates/main/binary-<arch>/ | Application functional updates
+| https://bearer:<token>@esm.ubuntu.com/apps/ubuntu/dists/<release>-apps-security/main/binary-<arch>/ | Application security updates
+|===
+
+Replace `<token>` with your personal Bearer Token. Also, `arch` and `release` must be replaced with one of the following values:
+
+[[ubuntu-esm-archs-releases]]
+[cols="1,1", options="header"]
+.Ubuntu ESM architectures and releases
+|===
+
+| Architectures | Releases
+| `amd64`, `arm64`, `armel`, `armhf`, `i386`, `powerpc`, `ppc64el`, `s390x` | `bionic`, `focal`, `jammy`, `noble`, `trusty`, `xenial`
+|===
+
+In order for {productname} to synchronize the repositories, the corresponding GPG keys (`ubuntu-advantage-esm-infra-trusty.gpg`, `ubuntu-advantage-esm-apps.gpg`) must be imported. These are located on a system registered with Ubuntu Pro under `/etc/apt/trusted.gpg.d`. Copy these files to the {productname} system and import them as follows:
+
+----
+mgradm gpg add /path/to/gpg.key
+----
+
+Create the appropriate child channels below already synchronized {ubuntu} parent channels. After that, repositories can be synchronized.
+
+[IMPORTANT]
+====
+The procedure shown here can be used to circumvent the subscription limitations - however, this constitutes a breach of the Terms of Service and may have **legal consequences**. There must always be sufficient subscriptions for the number of systems used.
+====
 
 == Check Synchronization Status
 
@@ -154,7 +225,7 @@ To be able to onboard using a regular user, you need to edit the [filename]``sud
 [NOTE]
 ====
 This issue happens with self-installed versions of {ubuntu}.
-If the default user has been granted administrative privileges during installation time, a password is requiered to perform privilege escalation using [command]``sudo``.
+If the default user has been granted administrative privileges during installation time, a password is required to perform privilege escalation using [command]``sudo``.
 With cloud instances this does not happen because [command]``cloud-init`` automatically creates a file under [path]``/etc/sudoers.d`` and grants privilege escalation through [command]``sudo`` without the need for a password.
 ====
 

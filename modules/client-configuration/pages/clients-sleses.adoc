@@ -1,7 +1,7 @@
 [[clients-sleses]]
 = Registering {sll} Clients
 
-This section contains information about registering traditional and Salt clients running {sll} operating systems.
+This section contains information about registering clients running {sll} operating systems.
 {sll} clients are based on {rhel} or {centos}.
 
 
@@ -81,14 +81,20 @@ The products you need for this procedure are:
 | OS Version
 | Product Name
 
-| {sll} 7
-| SUSE Linux Enterprise Server with Expanded Support 7 x86_64
+| {sll} 9
+| RHEL or SLES ES and Liberty 9 x86_64
 
 | {sll} 8
 | RHEL or SLES ES or CentOS 8 Base and SUSE Linux Enterprise Server with Expanded Support 8 x86_64
 
-| {sll} 9
-| RHEL or SLES ES and Liberty 9 x86_64
+| {sll} 7
+| SUSE Linux Enterprise Server with Expanded Support 7 x86_64
+
+| {sll} LTSS 7
+| SUSE Linux Enterprise Server with Expanded Support LTSS 7 x86_64
+
+| {sll} LTSS for Oracle 7
+| SUSE Linux Enterprise Server with Expanded Support LTSS for Oracle 7 x86_64
 
 |===
 
@@ -102,9 +108,11 @@ This procedure creates these tools channels:
 |===
 
 | OS Version | Base Channel                     | Tools Channel
-| {sll} 7     | RHEL Expanded Support 7          | RES7-SUSE-Manager-Tools x86_64
-| {sll} 8     | RHEL or SLES ES or CentOS 8 Base | RES8-Manager-Tools-Pool for x86_64 and RES8-Manager-Tools-Updates for x86_64
 | {sll} 9     | RHEL and Liberty 9 Base          | EL9-Manager-Tools-Pool for x86_64 and EL9-Manager-Tools-Updates for x86_64
+| {sll} 8     | RHEL or SLES ES or CentOS 8 Base | RES8-Manager-Tools-Pool for x86_64 and RES8-Manager-Tools-Updates for x86_64
+| {sll} 7     | RHEL Expanded Support 7          | RES7-SUSE-Manager-Tools x86_64
+| {sll} LTSS 7 | RHEL Expanded Support LTSS 7 | RES-7-SUSE-Manager-Tools for x86_64 LBT7
+| {sll} LTSS for Oracle 7 | RHEL Expanded Support LTSS for Oracle 7 | RES-7-SUSE-Manager-Tools for x86_64 LBTOL7
 
 |===
 
@@ -128,20 +136,30 @@ ifeval::[{suma-content} == true]
 | Client Channel
 | Tools Channel
 
-| {sll} 7
-| rhel-x86_64-server-7
+| {sll} 9
+| el9-pool-x86_64
 | -
-| res7-suse-manager-tools-x86_64
+| el9-manager-tools-pool-x86_64
 
 | {sll} 8
 | rhel8-pool-x86_64
 | -
 | res8-manager-tools-pool-x86_64
 
-| {sll} 9
-| el9-pool-x86_64
+| {sll} 7
+| rhel-x86_64-server-7
 | -
-| el9-manager-tools-pool-x86_64
+| res7-suse-manager-tools-x86_64
+
+| {sll} LTSS 7
+| res-7-ltss-updates-x86_64
+| -
+| res-7-suse-manager-tools-x86_64-lbt7
+
+| {sll} LTSS for Oracle 7
+| res-7-ol-ltss-updates-x86_64
+| -
+| res-7-suse-manager-tools-x86_64-lbtol7
 
 |===
 
@@ -157,20 +175,20 @@ ifeval::[{uyuni-content} == true]
 | Client Channel
 | Tools Channel
 
-| {sll} 7
-| rhel-x86_64-server-7
+| {sll} 9
+| el9-pool-x86_64
 | -
-| sll7-uyuni-client-x86_64
+| sll9-uyuni-client-x86_64
 
 | {sll} 8
 | rhel8-pool-x86_64
 | -
 | sll8-uyuni-client-x86_64
 
-| {sll} 9
-| el9-pool-x86_64
+| {sll} 7
+| rhel-x86_64-server-7
 | -
-| sll9-uyuni-client-x86_64
+| sll7-uyuni-client-x86_64
 
 |===
 
@@ -179,16 +197,14 @@ include::snippets/addchannels_novendor_cli.adoc[]
 endif::[]
 
 
-include::snippets/appstream_admon.adoc[]
-
-
 
 [[add.base.media]]
 === Add Base Media
 
-// 2022-04-26, ke: Here we can keep the "jeos" abbrev (rh product line)
-The base {sll} channel does not contain any packages, because {suse} does not provide {rhel} or {centos} base media.
-You need to obtain base media from {redhat} or {centos}, which you can add as a child channel to the {sll} parent channel.
+The {sll} software channels only provide updates, not the packages themselves.
+To register {sll} clients, first register the {sll} Product (outlined below) to create the base channel, then import the necessary Red Hat or CentOS packages as custom child channels.
+Initial packages must be obtained directly from {redhat} or {centos} before applying updates from {sll}.
+Importantly, you do not need to maintain your Red Hat subscriptions, but consult your legal department to check for any ongoing payment obligations to Red Hat during migration.
 To ensure you have all the packages you need, use a full DVD image, not a minimal or {jeos} image.
 
 You can use {productname} custom channels to set up the {rhel} or {centos} media.
@@ -211,22 +227,18 @@ If you do not provide Python 3.6, the installation of the [package]``spacecmd``
 
 
 .Procedure: Adding Base Media to Custom Channels
-. On the {productname} Server, at the command prompt, as root, copy the base media image to the [path]``/tmp/`` directory.
-. Create a directory to contain the media content.
-    Replace [command]``<os_name>`` with either ``sll7``, ``sll8``, or ``sll9``:
+. Copy the base media image to the {productname} Server container host to the [path]``/tmp/`` directory.
+. To get the base media image into the {productname} Server container, use:
 +
 ----
-mkdir -p /srv/www/htdocs/pub/<os_name>
+mgradm distribution copy /tmp/SLES-ES-7.9-x86_64-DVD.iso sles-es-7
 ----
-. Mount the image:
 +
-----
-mount -o loop /tmp/<iso_filename> /srv/www/htdocs/pub/<os_name>
-----
+The destination in the container will be [path]``/srv/www/distributions/sles-es-7``.
 . Import the packages into the child channel you created earlier:
 +
 ----
-spacewalk-repo-sync -c <channel-label> -u file:///srv/www/htdocs/pub/<os_name>/<repopath>/
+spacewalk-repo-sync -c <channel-label> -u file:///srv/www/distributions/sles-es-7/
 ----
 
 
@@ -254,6 +266,7 @@ include::snippets/manual_repos.adoc[]
 
 include::snippets/manual_associate.adoc[]
 
+
 == Check Synchronization Status
 
 ifeval::[{suma-content} == true]
@@ -261,6 +274,7 @@ ifeval::[{suma-content} == true]
 include::snippets/check_sync_webui_suma.adoc[]
 
 endif::[]
+
 
 ifeval::[{uyuni-content} == true]
 
@@ -284,3 +298,50 @@ This gives you a backup of the original synchronization data.
 == Register {sll} Clients
 
 include::snippets/create_bootstrap_repo_register.adoc[]
+
+
+
+[[clients-sleses-el-migration]]
+== Migrate Enterprise Linux (EL) clients to {sll}
+
+If an Enterprise Linux (EL) client such as RHEL and all clones (like {centos}, {almalinux}, {rocky}, and {oracle}) is already registered as a minion on {productname} and users want to migrate it to {sll} they can use a re-activation key to apply the activation key that drives the migration.
+
+For more information about re-activation keys, see xref:client-configuration:activation-keys.adoc#activation-keys-reactivation[].
+
+The re-activation key is per minion, and can be generated with the {webui} or using the API.
+For more information, see https://documentation.suse.com/suma/5.0/api/suse-manager/api/system.html#apidoc-system-obtainReactivationKey-loggedInUser-sid.
+
+To re-activate a client, the user can run the bootstrap script on the client and pass the re-activation key as an environment variable.  Example:
+
+----
+REACTIVATION_KEY=<KEY> ./bootstrap_liberate9.sh
+----
+
+Another method is to add some special flags to the {salt} client configuration file located at [path]``/etc/venv-salt-minon/minion.d/susemanager.conf`` (or [path]``/etc/salt-minon/minion.d/susemanager.conf``) the following content (join this content with the already existing one):
+
+----
+grains:
+    susemanager:
+        activation_key: "<KEY_ID>"
+        management_key: "MINION_REACTIVATION_KEY"
+----
+
+After changing the [path]``susemanager.conf`` file, the [systemitem]``salt-minion`` service needs to be restarted on the {salt} server.  By default with:
+
+----
+systemctl restart venv-salt-minon
+----
+
+Or for legacy {salt} with:
+
+----
+systemctl restart salt-minon
+----
+
+
+
+
+=== The [systemitem]``liberate`` formula
+
+Migrating Enterprise Linux (EL) clients to {sll} with the [systemitem]``liberate`` formula.
+For more information, see xref:specialized-guides:salt/salt-formula-liberate.adoc[].

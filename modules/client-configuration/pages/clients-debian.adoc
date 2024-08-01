@@ -55,9 +55,8 @@ The products you need for this procedure are:
 |===
 
 | OS Version  | Product Name
-| {debian} 10 | Debian 10
-| {debian} 11 | Debian 11
 | {debian} 12 | Debian 12
+| {debian} 11 | Debian 11
 |===
 
 include::snippets/addchannels_vendor_webui.adoc[]
@@ -71,9 +70,8 @@ The channels you need for this procedure are:
 |===
 
 | OS Version  | Product Name
-| {debian} 10 | debian-10-pool-amd64
-| {debian} 11 | debian-11-pool-amd64
 | {debian} 12 | debian-12-pool-amd64
+| {debian} 11 | debian-11-pool-amd64
 |===
 
 include::snippets/addchannels_vendor_cli.adoc[]
@@ -96,23 +94,17 @@ The channels you need for this procedure are:
 | Updates Channel
 | Security Channel
 
-| {debian} 10
-| debian-10-pool-amd64-uyuni
-| debian-10-amd64-uyuni-client
-| debian-10-amd64-main-updates-uyuni
-| debian-10-amd64-main-security-uyuni
-
-| {debian} 11
-| debian-11-pool-amd64-uyuni
-| debian-11-amd64-uyuni-client
-| debian-11-amd64-main-updates-uyuni
-| debian-11-amd64-main-security-uyuni
-
 | {debian} 12
 | debian-12-pool-amd64-uyuni
 | debian-12-amd64-uyuni-client
 | debian-12-amd64-main-updates-uyuni
 | debian-12-amd64-main-security-uyuni
+
+| {debian} 11 
+| debian-11-pool-amd64-uyuni
+| debian-11-amd64-uyuni-client
+| debian-11-amd64-main-updates-uyuni
+| debian-11-amd64-main-security-uyuni
 
 |===
 
@@ -173,13 +165,13 @@ Packages will not be re-signed by Uyuni.
 To see which GPG keys are already imported to {productname} Server, run the following command:
 
 ----
-sudo gpg --homedir /var/lib/spacewalk/gpgdir --list-keys
+mgrctl exec -- gpg --homedir /var/lib/spacewalk/gpgdir --list-keys
 ----
 
-To import a new GPG key, use the `--import` parameter:
+To import a new GPG key, run the following command:
 
 ----
-sudo gpg --homedir /var/lib/spacewalk/gpgdir --import <filename>.gpg
+mgradm gpg add <filename>.gpg
 ----
 
 

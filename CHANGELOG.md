@@ -1,3 +1,155 @@
+- Change path for web.xml tuning in Administration Guide
+- Adjusted SSL certificate renewal commands for containers in
+  Administration Guide
+- Updated SLE Micro update behavior in Installation and Upgrade Guide
+- Updated Disconnected Server chapter in Administration Guide
+  (bsc#1226728)
+- Added note about usernames in PAM section in Administration Guide
+ (bsc#1227599)
+- Update Clients Update Using Recurring Actions workflow to account for
+  uptodate state changes
+- Fixed X logo position on mobile devices
+- Removed raw image format from the available VM image deployment tables
+  for both Server and Proxy on AArch64
+- Fixed sequence of commands and preparation steps of the 4.3 to 5.0
+  server migration procedure
+- Consolidated terminology around the old server and the migration target
+  in Installation and Upgrade Guide
+- Added more information about the Prometheus alert manager in
+  Administration Guide
+- Add storage extra configuration for migration step in Installation and
+  Upgrade Guide
+- Added Salt Connectivity section to the Specialized Guides
+- Improved Large Deployments Guide with better tuning values and
+  extra parameters added
+- Fix indentation on install storage instructions
+- Update air-gap deployment for server and proxy
+- Improved proxy migration and installation in Installation and Upgrade
+  Guide
+- Warn about copying GPG keys manually while migrating
+- Warn about copying certification files manually while migrating
+  4.3 servers to 5.0 in Installation and Upgrade Guide (bsc#1227198)
+- Fixed proxy deployment details (bsc#1226843)
+- Added admonition about domain name and IP address while migrating
+  from a non-containerized server in Installation and Upgrade Guide
+  (bsc#1227177)
+- Fixed documentation concerning strict mode in Custom Channels chapter
+  in the Administration Guide (bsc#1227130)
+- Updated lists of SUSE Linux Enterprise hardening profiles in openSCAP
+  chapter in the Administration Guide
+- Added SUSE Liberty Linux 7 LTSS entries (bsc#1226913)
+- Removed outdated disclaimer in CLM examples regarding AppStreams
+  (bsc#1226687)
+- Documented proper --mirrorPath parameter in disconnected setup chapter of
+  the Administration Guide
+- Fixed Activation Key link in SUSE Liberty Linux Clients page
+- Fixed reposync path for SUSE Liberty Linux Base Media
+- Fixed Adding Base Media to Custom Channels for SUSE Liberty Linux
+  in Client Configuration guide
+- Remove duplicate instructions from the Liberate Formula page
+- Fixed Liberate Formula instructions
+- Documented 'mgradm distribution' command to prepare installation
+  source in Upgrade chapter of Client Configuration Guide
+- Added VM image deployment documentation for Proxy and Server in the
+  Installation and Upgrade Guide
+- Removed legacy content from the Installation and Upgrade Guide
+- Added SLE15 SP6 as supported client
+- Added openSUSE Leap SP6 as supported client
+- Adding SL Micro 6.0 as supported client
+- Removed Apache exporter from monitoring chapter in the Administration
+  Guide
+- Updated autoinstallation usage with containerized server
+  (bsc#1222692)
+- Added image-sync boot image details (bsc#1206055)
+- Updated retail workflow for SUSE Manager 5.0 containerized proxies
+- Excluded detailed information about creating and running a CentOS
+  errata checking script from SUSE Manager documentation in Client
+  Configuration Guide
+- Added note about CentOS 7 errata checking script applicable to
+  non-containerized Uyuni installation in Client Configuration Guide
+- Removed additional legacy content in the Installation and
+  Upgrade guide
+- Added Proxy migration documentation for SUSE Manager 5.0
+- Documented availibility of package lock on RedHat-like clients
+- Removed spacecmd functions that are not longer available
+- Cleaned up Installation and Upgrade Guide navigation,
+  additional legacy content removed
+- Added information about mirroring Ubuntu ESM packages
+- Started with referencing 5.0 API documentation
+- Added deprecation warning for Inter-Server Synchronization (Version 1)
+  feature in Administration Guide
+- Added deprecation warning for virtualization management feature
+  in Client Configuration Guide
+- Added Proxy Quickstart Guide for deploying containerized Proxies
+- Updated adding custom GPG key for repositories synchronization
+- Added AppStream section to Client Configuration Guide
+- Added Systems > Software > AppStreams documentation to Reference Guide
+- Removed warning about limited AppStream support
+- Added Confidential Computing as technology preview
+  to Administration Guide
+- Updated containerized server monitoring documentation
+- Document channel management CLI tools in Reference Guide
+- Use mgradm for Hub Server deployment in Large Deployment Guide
+- Reogranized Installation and Upgrade navigation for clarity
+- Improved document names and removed legacy content
+- Updated default storage volume locations in documentation for
+  containers
+- Removed Unified Installer documentation from Requirements
+- Removed Unified Installer documentation from General Requirements
+- Updated ports documentation for containers
+- Updated database migration sections in the Installation and Upgrade
+  Guide
+- Removed visualization feature
+- Documented channel synchronization options in Administration Guide
+- Added a new workflow describing how to update clients using recurring
+  actions to Commown Workflows
+- Improved navigation list font styles in the branding theme
+- Cleaned up navlists for containers
+- Fix self_update kernel option description (bsc#1221819)
+- Deprecated client proxy script
+- Added information about requirements for the PostgreSQL database
+  in the Installation and Upgrade Guide (bsc#1220376)
+- Fixed the instructions for SSL Certificates (bsc#1219061)
+- Remove package sync paragraph in package-management doc since
+  it is not available for Salt clients and traditional clients are no
+  longer supported (bsc#1221279)
+- Added reference from Hub documentation to Inter-Server
+  Synchronization in Large Deployment Guide
+- Bare-Metal System discovery feature disabled or dropped and thus, as
+  it is part of the traditional stack, no longer documented
+- Moved detailed description of client deletion from Common
+  Workflows to Administration Guide
+- Documented Virtualization Guest and Virtualization Host Formula
+- Reformatted Supported Clients tables in Client Configuration Guide
+  and Installation and Upgrade Guide
+- Add documentation about SMTP timeout configuration
+- Documented SSH key rotation in Salt Guide (bsc#1170848)
+- Documented liberate formula in Salt Guide
+- Fixed Prepare on-demand images section in Client Configuration Guide
+  (bsc#1219130)
+- Fixed a changed configuration parameter for salt-ssh
+- Added container deployment documentation to the Installation and
+  Upgrade Guide
+- Fixed incorrect references to SUSE Linux Enterprise Server 15 SP4
+  as base product for SUSE Manager
+- Update the repository needed to install mgrpxy
+- Added Pay-as-you-go on the Cloud: FAQ document to SUSE Manager
+  documentation
+- Updated max-connections tuning recommendation in Large Deployment Guide
+- Added troubleshooting instructions for setting up in public cloud
+  (BYOS) to Administration Guide
+- Added detailed information about the messages produced by subscription
+  matcher
+- Added section about migrating Enterprise Linux (EL) clients to SUSE Liberty
+  Linux to Client Configuration Guide
+- Inserted sudo configuration into the Salt SSH section taken from
+  traditional client documentation in the Client Configuration Guide
+- Added Pay-as-you-go as supported service on Azure to the Public Cloud Guide
+- Updated the proxy installation in Installation and Upgrade Guide to use
+  the mgrpxy tool
+- Added note about refreshing pillar data in Salt Guide (bsc#1189047)
+- Added and fixed configuration details in Troubleshooting Renaming
+  Server in Administration Guide
 - Added openSUSE Leap to Supported Features navigation list in Client
   Configuration Guide (bsc#1218094)
 - Described new monitoring metrics for Salt queue in Administration Guide
@@ -10,8 +162,6 @@
 - Fixed RHEL channel names for bootstrapping in Client Configuration Guide
 - Removed traditional client stack documentation such as command line
   tools in Reference Guide
-- Documented Raspbian OS 12 as supported by Uyuni in Client
-  Configuration Guide
 - Corrected command mgr-push to mgrpush in Administration Guide (bsc#1215810)
 - Added Pay-as-you-go for Azure documentation to the Specialized Guides
   book
@@ -24,7 +174,7 @@
 - Fixed file location in Custom Salt Formulas section of Salt Guide
 - Documented using Virtualization Host formula in Client Configuration Guide
 - Document Amazon Linux 2023
-- Added support for SUSE Linux Enterprise Micro 5.5 and openSUSE 
+- Added support for SUSE Linux Enterprise Micro 5.5 and openSUSE
   Leap Micro 5.5 clients to Installation and Upgrade Guide, and to
   Configuration Guide
 - Added Liberty Linux versions 7 and 8 to the supported features matrix in
@@ -32,9 +182,6 @@
 - Updated Twitter handle reference in documentation UI
 - Started with removing traditional client documentation in Client
   Configuration Guide and removed cross references to other Guides
-
-- Changed installation of Uyuni Proxy with openSUSE Leap instructions to
-  refer to Leap 15.5
 - Fixed parser error with ifeval or url tag in Image management section
   of Administration Guide
 - Replaced "Quick Start: Public Cloud" with "Public Cloud Guide" in
@@ -42,8 +189,6 @@
 - Added Debian 12 as supported client in Client Configuration Guide
 - Added legend to table in Configuration Management section of Client
   Configuration Guide
-- Corrected the Uyuni version in the migration instructions in Installation
-  and Upgrade Guide
 - Fixed delete channel procedure in Channel management section in
   Administration Guide
 - Corrected the client tools channel name in Client Configuration Guide
@@ -71,8 +216,6 @@
 - The configure-proxy.sh script no longer generates configuration channels
 - Fixed broken links and references in the Image building file in
   Administration Guide
-- Exclude database migration description for Uyuni, because it does not
-  apply currently
 - Fixed navigation bar of Administration Guide
 - Updated autoinstallation chapter in Client Configuration Guide about
   buildiso command in the context of Cobbler
@@ -113,7 +256,7 @@
 - File renamed to follow standardized format
 - Changed filename for configuring Tomcat memory usage in Specialized Guides
   (bsc#1212814)
-- Minimal memory requirement is 16 GB for Uyuni or SUSE Manager Server
+- Minimal memory requirement is 16 GB for SUSE Manager Server
   installation, also for test installation
 - Added a note about Oracle Unbreakable Linux Network mirroring requirements
   in Client Configuration Guide (bsc#1212032)
@@ -125,9 +268,8 @@
   Guide (bsc#1210103)
 - Update Red Hat channel names to reflect the new custom channels for easier
   onboarding
-- In the Installation and Upgrade Guide, unified SUSE Manager and
-  Uyuni Proxy registration; mentioned registering Uyuni Proxy with the
-  Web UI.
+- In the Installation and Upgrade Guide, unified SUSE Manager Proxy
+  registration
 - Warned about the impossibility of moving chained proxies in the
   Client Configuration Guide.
 - Update the different OS support tables to the current technical support state
@@ -169,7 +311,7 @@
   (bsc#1209508)
 - Added instruction for Cobbler to use the correct label in Client Config Guide
   distro label (bsc#1205600)
-- Adjusted python version and OpenSUSE Leap version in public cloud 
+- Adjusted python version and OpenSUSE Leap version in public cloud
   document (bsc#1209938)
 - Fixed calculation of DB max-connections and align it with the supportconfig
   checking tool in the Tuning Guide
@@ -182,12 +324,9 @@
 - Enhanced the note about the remove PTF capability in Administration Guide
 - Added information about evaluation command parameter for OpenSCAP (bsc#1207931)
 - Enhanced deleting clients in Client Configuration Guide
-- Added instructions about contanerized proxy deployment to Installation and 
+- Added instructions about contanerized proxy deployment to Installation and
   Upgrade Guide
-- Explained using PTFs in SUSE Manager and Uyuni in Administration Guide
-- Added Uyuni Client Tools channels for Enterprise Linux / SUSE Liberty
-  Linux and provide dedicated table for SUSE Manager in Client
-  Configuration Guide (bsc#1205719)
+- Explained how to use PTFs in SUSE Manager in the Administration Guide
 - Warned about installing containerized proxy on traditional container host in
   Installation and Upgrade Guide
 - Added openSUSE Leap 15.5 as a supported client
@@ -207,11 +346,11 @@
 - Added SUSE Liberty Linux 9 clients as supported and use SUSE Liberty Linux
   name more consistently
 - Added information about GPG key usuage in the Debian section of the Client
-  Configuration Guide 
+  Configuration Guide
 - Add Grafana configuration instructions in Administration Guide.
-- Clarified monitoring components support matrix in Client Configuration 
+- Clarified monitoring components support matrix in Client Configuration
   Guide
-- Added information to use Hub when managing more than 10,000 clients 
+- Added information to use Hub when managing more than 10,000 clients
   to the Hardware Requirements in the Installation and Upgrade Guide
 - Added Red Hat Enterprise Linux 9 clients as supported (bsc#1205896)
 - Updated default number of changelog entries in Administration Guide
@@ -257,17 +396,15 @@
 - Fix description of default notification settings (bsc#1203422)
 - Added missing Debian 11 references
 - Removed references to Debian 9 as it approached EOL and support
-- Document helm deployment of the proxy on k3s and MetalLB in Installation
+- Document Helm deployment of the proxy on K3s and MetalLB in Installation
   and Upgrade Guide
 - Added secure mail communication settings in Administration Guide
-- fix path to state and pillar files
+- Fix path to state and pillar files
 - Documented how pxeboot works with Secure Boot enabled in Client
   Configuration Guide.
 - Add repository via proxy issues troubleshooting page
 - Added SLE Micro 5.2 and 5.3 as available as a technology preview in Client
   Configuration Guide, and the IBM Z architecture for 5.1, 5.2, and 5.3
-- Added command to remove the obsolete Python module on SUSE Manager Server 4.1
-  in the Installation and Upgrade Guide (bsc#1203026)
 - Improve instructions for setting up SSO with keycloak 9.0.2 in Administration
   Guide
 - Mention CA certificate directory in the proxy setup description in the
@@ -287,6 +424,10 @@
 - Reverted single snippet change for two separate books
 - Added Extend Salt Bundle functionality with Python packages using pip
 - Salt Configuration Modules are no longer Technology Preview in Salt Guide.
+- Removed Ubuntu 18.04 registration documentation
+
+# Last packaged: 2023.10.19
+
 - Described disabling local repositories in Client Configuration Guide
 - Documented Ubuntu 22.04 LTS as a supported client OS in Client Configuration Guide
 - Remove misleading installation screen shots in the Installation and Upgrade
@@ -575,3 +716,4 @@
   client operating systems.
 - Documented upgrading to version 4.2 in Upgrade Guide (bsc#1185711).
 - Fixed URL of API documentation
+

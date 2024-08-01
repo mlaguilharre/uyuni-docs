@@ -59,7 +59,7 @@ endef
 define antora-suma-function
 	cd $(current_dir)
 	$(call enable-suma-in-antorayml,$(1)) && \
-	cd $(current_dir)/$(1) && DOCSEARCH_ENABLED=true SITE_SEARCH_PROVIDER=lunr LANG=$(2) LC_ALL=$(2) LC_ALL=$(2) npx antora --extension @antora/lunr-extension $(current_dir)/$(1)/suma-site.yml
+	cd $(current_dir)/$(1) && DOCSEARCH_ENABLED=true SITE_SEARCH_PROVIDER=lunr LANG=$(2) LC_ALL=$(2) LC_ALL=$(2) npx antora $(current_dir)/$(1)/suma-site.yml
 endef
 
 define enable-uyuni-in-antorayml
@@ -74,13 +74,14 @@ endef
 define antora-uyuni-function
 	cd $(current_dir)
 	$(call enable-uyuni-in-antorayml,$(1)) && \
-	cd $(current_dir)/$(1) && DOCSEARCH_ENABLED=true SITE_SEARCH_PROVIDER=lunr LANG=$(2) LC_ALL=$(2) LC_ALL=$(2) npx antora --extension @antora/lunr-extension $(current_dir)/$(1)/uyuni-site.yml
+	cd $(current_dir)/$(1) && DOCSEARCH_ENABLED=true SITE_SEARCH_PROVIDER=lunr LANG=$(2) LC_ALL=$(2) LC_ALL=$(2) npx antora $(current_dir)/$(1)/uyuni-site.yml
 endef
 
 define clean-function
 	cd $(current_dir)
 	rm -rf build/$(2)  #e.g. build/en
 	rm -rf $(1)        #e.g. translations/en
+	rm -rf Makefile.$(2)
 	find . -name "*pdf.$(2).adoc" -type f -exec rm -f {} \;
 endef
 
@@ -223,6 +224,16 @@ copy-branding:
 	cd $(current_dir)
 	mkdir -p $(current_dir)/translations
 	cp -a $(current_dir)/branding $(current_dir)/translations/
+
+.PHONY: configure-suma-branding-dsc
+configure-suma-branding-dsc:
+	sed -i -e 's|supplemental_files: ./branding/supplemental-ui/suma/.*|supplemental_files: ./branding/supplemental-ui/suma/susecom-2023|' site.yml
+	cat site.yml
+
+.PHONY: configure-suma-branding-webui
+configure-suma-branding-webui:
+	sed -i -e 's|supplemental_files: ./branding/supplemental-ui/suma/.*|supplemental_files: ./branding/supplemental-ui/suma/webui-2023|' site.yml
+	cat site.yml
 
 .PHONY: clean-branding
 clean-branding:

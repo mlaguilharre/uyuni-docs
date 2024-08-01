@@ -5,17 +5,42 @@ HTTP Strict Transport Security (https://developer.mozilla.org/en-US/docs/Web/HTT
 
 {productname} allows enabling HSTS, to enable it for a {productname} Server:
 
+
 .Procedure
-1. Edit `/etc/apache2/conf.d/zz-spacewalk-www.conf`
-2. Uncomment the line `# Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"`
-3. Restart Apache with `systemctl restart apache2`
+. Create new configuration file:
++
+----
+mgrctl exec -- echo 'Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"' >/etc/apache2/conf.d/zz-spacewalk-www-hsts.conf
+----
++
+. Restart Apache with:
++
+----
+mgrctl exec -- systemctl restart apache2
+----
+
 
 To enable it for {productname} Proxies:
 
 .Procedure
-1. Edit `/etc/apache2/conf.d/spacewalk-proxy.conf`
-2. Uncomment the line `# Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains"`
-3. Restart Apache with `systemctl restart apache2`
+. Create new configuration file, for example `/etc/uyuni/custom-httpd.conf`.
+. Add line:
++
+----
+ `Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains`.
+----
+. Run command:
++
+----
+mgrpxy install podman --tuning-httpd /etc/uyuni/custom-httpd.conf config.tar.gz
+----
+
+[WARNING]
+====
+When naming the new config file [literal]``<filename>.conf``, make sure it is loaded at the right time.
+For example, to override something defined in [literal]``spacewalk-www.conf`` the new file needs to be alphabetically after this file. 
+For more information about how Apache loads files, see https://httpd.apache.org/docs.
+====
 
 
 [IMPORTANT] 

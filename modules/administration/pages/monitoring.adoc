@@ -95,6 +95,13 @@ If your monitoring server is a Salt client, you can install the Prometheus packa
 Otherwise you can download and install the package on your monitoring server manually.
 The Prometheus software is also available for {productname} Proxy and {productname} {smr} Branch Server.
 
+[IMPORTANT]
+====
+* To access a shell inside the Server container run [literal]``mgrctl term`` on the container host.
+
+* To copy files from inside the container use [literal]``mgrctl cp``.
+====
+
 [NOTE]
 ====
 Prometheus expects POSIX filesystem for storing data.
@@ -194,7 +201,7 @@ For more information about the Prometheus configuration options, see the officia
 
 === Install Grafana
 
-If your monitoring server is a Salt client, you can install the Grafana package using the {productname} {webui}.
+If your monitoring server is a client managed by {productname}, you can install the Grafana package using the {productname} {webui}.
 Otherwise you can download and install the package on your monitoring server manually.
 
 [NOTE]
@@ -238,9 +245,6 @@ systemctl enable --now grafana-server
     If login is successful, then you will see a prompt to change the password.
 . Click btn:[OK] on the prompt, then change your password.
 . Move your cursor to the cog icon on the side menu which will show the configuration options.
-+
-image::grafana_sidemenu_datasource.png[scaledwidth=40%]
-
 . Click btn:[Data sources].
 . Click btn:[Add data source] to see a list of all supported data sources.
 . Choose the Prometheus data source.
@@ -254,8 +258,8 @@ image::monitoring_grafana_example.png[scaledwidth=80%]
 
 [NOTE]
 ====
-. For more information about the monitoring formulas, see xref:specialized-guides:salt/salt-formula-monitoring.adoc[].
-. For more information on how to manually install and configure Grafana, see https://grafana.com/docs.
+* For more information about the monitoring formulas, see xref:specialized-guides:salt/salt-formula-monitoring.adoc[].
+* For more information on how to manually install and configure Grafana, see https://grafana.com/docs.
 ====
 
 == Configure {productname} Monitoring
@@ -269,7 +273,7 @@ With {productname}{nbsp}4 and higher, you can enable the server to expose Promet
 The Server self-health metrics cover hardware, operating system and {productname} internals.
 These metrics are made available by instrumentation of the Java application, combined with Prometheus exporters.
 
-These exporter packages are shipped with {productname} Server:
+These exporters are shipped with {productname} Server:
 
 * Node exporter: [systemitem]``golang-github-prometheus-node_exporter``.
 ** See https://github.com/prometheus/node_exporter.
@@ -277,8 +281,6 @@ These exporter packages are shipped with {productname} Server:
 ** See https://github.com/wrouesnel/postgres_exporter.
 * JMX exporter: [systemitem]``prometheus-jmx_exporter``.
 ** See https://github.com/prometheus/jmx_exporter.
-* Apache exporter: [systemitem]``golang-github-lusitaniae-apache_exporter``.
-** See https://github.com/Lusitaniae/apache_exporter.
 
 These exporter packages are shipped with {productname} Proxy:
 
@@ -287,7 +289,7 @@ These exporter packages are shipped with {productname} Proxy:
 * Squid exporter: [systemitem]``golang-github-boynux-squid_exporter``.
 ** See https://github.com/boynux/squid-exporter.
 
-The exporter packages are pre-installed in {productname} Server and Proxy, but their respective systemd daemons are disabled by default.
+The exporters are pre-installed in {productname} Server and Proxy, but their respective systemd daemons are disabled by default.
 
 
 
@@ -297,10 +299,8 @@ The exporter packages are pre-installed in {productname} Server and Proxy, but t
 . Click btn:[Enable services].
 . Restart Tomcat and Taskomatic.
 . Navigate to the URL of your Prometheus server, on port 9090 (for example, [literal]``http://example.com:9090``)
-. In the Prometheus UI, navigate to menu:[Status > Targets] and confirm that all the endpoints on the ``mgr-server`` group are up.
-. If you have also installed Grafana with the {webui}, the server insights are visible on the {productname} Server dashboard.
-
-image::monitoring_enable_services.png[scaledwidth=80%]
+. In the Prometheus UI, navigate to menu:Status[Targets] and confirm that all the endpoints on the ``mgr-server`` group are up.
+. If you have also installed Grafana with the {webui}, the server insights are visible on the {productname} Server dashboard, in the menu:Admin[Manager Configuration > Monitoring].
 
 [IMPORTANT]
 ====
@@ -468,7 +468,7 @@ These exporters can be installed on managed systems:
 
 [NOTE]
 ====
-On {micro}, only the Node exporter and the Blackbox exporter are available.
+On {sle-micro}, only the Node exporter and the Blackbox exporter are available.
 ====
 
 When you have the exporters installed and configured, you can start using Prometheus to collect metrics from the monitored systems.
@@ -478,7 +478,7 @@ If you have configured your monitoring server with the {webui}, metrics collecti
 
 .Procedure: Configuring Prometheus Exporters on a Client
 
-. In the {productname} {webui}, open the details page of the client to be monitored, and navigate to the menu:Formulas tab.
+. In the {productname} {webui}, open the details page of the client to be monitored, and navigate to the menu:Formulas[] tab.
 . Check the [guimenu]``Enabled`` checkbox on the ``Prometheus Exporters`` formula.
 . Click btn:[Save].
 . Navigate to the menu:Formulas[Prometheus Exporters] tab.
@@ -486,8 +486,6 @@ If you have configured your monitoring server with the {webui}, metrics collecti
     The [guimenu]``Address`` field accepts either a port number preceded by a colon (``:9100``), or a fully resolvable address (``example:9100``).
 . Click btn:[Save Formula].
 . Apply the highstate.
-
-image::monitoring_configure_formula.png[scaledwidth=80%]
 
 [NOTE]
 ====
@@ -519,6 +517,9 @@ By default, Prometheus uses these ports:
 * Apache exporter: 9117
 
 Additionally, if you are running the alert manager on a different host than where you run Prometheus, you also need to open port 9093.
+The alert manager is part of Prometheus solution.
+It handles alerts sent by client applications such as the Prometheus server instance.
+For more information about the alert manager, see https://prometheus.io/docs/alerting/latest/alertmanager/.
 
 For clients installed on cloud instances, you can add the required ports to a security group that has access to the monitoring server.
 

@@ -1,101 +1,103 @@
 [[supported-features-sle-micro]]
-= Supported {micro} Client Features
+= Supported {sle-micro} Features
 
 
 [IMPORTANT]
 ====
 The operating system you run on a client is supported by the organization that supplies the operating system.
-{micro} is supported by {suse}.
+{sle-micro} is supported by {suse}.
 ====
 
+[IMPORTANT]
+====
+{sle-micro} is only supported as regular minion ([systemitem]``default`` contact method) for the time being. We are working on managing it as Salt SSH client ([systemitem]``salt-ssh`` contact method), too.
+====
 
 The icons in this table indicate:
 
-* {check} the feature is available on both Salt and traditional clients
+* {check} the feature is available
 * {cross} the feature is not available
 * {question} the feature is under consideration, and may or may not be made available at a later date
-* {trad} the feature is supported only on traditional clients
-* {salt} the feature is supported only on Salt clients.
 
 
 [cols="1,1", options="header"]
-.Supported Features on {micro} Operating Systems
+.Supported Features on {sle-micro} Operating Systems
 |===
 
 | Feature
-| {micro}
+| {sle-micro}
 
 | Client
-| {salt}
+| {check}
 
 | Operating system packages
-| {salt}
+| {check}
 
 | Registration
-| {salt}
+| {check}
 
 | Install packages
-| {salt}
+| {check}
 
 | Apply patches (requires CVE ID)
-| {salt}
+| {check}
 
 | Remote commands
-| {salt}
+| {check}
 
 | System package states
-| {salt}
+| {check}
 
 | System custom states
-| {salt}
+| {check}
 
 | Group custom states
-| {salt}
+| {check}
 
 | Organization custom states
-| {salt}
+| {check}
 
 | System set manager (SSM)
-| {salt}
+| {check}
 
 | Product migration
-| {salt}
+| {check}
 
 | Basic Virtual Guest Management {star}
-| {salt}
+| {check}
 
 | Advanced Virtual Guest Management {star}
-| {salt}
+| {check}
 
 | Virtual Guest Installation (Kickstart), as Host OS
-| {salt}
+| {check}
 
 | Virtual Guest Installation (image template), as Host OS
-| {salt}
+| {check}
 
 | System deployment (PXE/Kickstart)
-| {salt}
+| {check}
 
 | System redeployment (Kickstart)
-| {salt}
+| {check}
 
 | Contact methods
-| {salt}: ZeroMQ
+| {check} ZeroMQ
 
 | Works with {productname} Proxy
-| {salt}
+| {check}
 
 | Action chains
-| {salt}
+| {check}
 
 | Staging (pre-download of packages)
 | {question}
 
 | Duplicate package reporting
-| {salt}
+| {check}
 
 | CVE auditing (requires CVE ID)
-| {salt}
+| {check}
 
 | SCAP auditing
 | {question}
@@ -104,7 +106,7 @@ The icons in this table indicate:
 | {question}
 
 | Package locking
-| {salt}
+| {check}
 
 | System locking
 | {question}
@@ -116,19 +118,19 @@ The icons in this table indicate:
 | {cross}
 
 | Configuration file management
-| {salt}
+| {check}
 
 | Snapshots and profiles
-| {salt}: Profiles supported, Sync not supported
+| {check} Profiles supported, Sync not supported
 
 | Power management
-| {salt}
+| {check}
 
 | Monitoring server
 | {cross}
 
 | Monitored clients {star}{star}
-| {salt}
+| {check}
 
 | Docker buildhost
 | {cross}
@@ -140,10 +142,10 @@ The icons in this table indicate:
 | {cross}
 
 | Build Kiwi image with OS
-| {salt}
+| {check}
 
 | Recurring Actions
-| {salt}
+| {check}
 
 | AppStreams
 | N/A
@@ -160,4 +162,4 @@ Basic virtual guest management includes listing VMs, slow refresh, VM lifecycle 
 
 Advanced virtual guest management includes all features of Basic virtual guest management plus fast refresh, VM lifecycle actions (delete, reset, power off), modifying VM disk, network, graphical display, and graphical display configuration.
 
-{star}{star} On {micro}, only the Node exporter and the Blackbox exporter are available.
+{star}{star} On {sle-micro}, only the Node exporter and the Blackbox exporter are available.
