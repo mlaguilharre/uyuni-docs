@@ -107,3 +107,35 @@ mgradm upgrade podman -h
 
 
 For air-gapped installations, first upgrade the container RPM packages, then run the [literal]``mgradm`` command.
+
+ifeval::[{mlm-content} == true]
+
+= How to apply a Program Temporary Fix (PTF) to a containerized SUSE Manager 5
+. Situation
+A Program Temporary Fix (PTF) was received to address an issue reported for a containerized SUSE Manager 5 installation.
+Applying a containerized fix to SUSE Manager 5 is accomplished using the following command:
+
+. Resolution
+Applying a containerized fix to SUSE Manager 5 is accomplished using the following command:
+[source,shell]
+----
+mgradm support ptf podman --ptf <PTFnumber> --user <accountID>
+----
+The *<PTFnumber>* will be provided by a SUSE Support representative.
+The *<accountID>* can be found in the SUSE Customer Center account, either to the right of the company name or on the left hand side in the navigation frame in grey font under the company name.
+Make sure to select the account the SUSE Manager installation is registered to.
+
+[NOTE]
+====
+*The starting letter of the "accountID" needs to be specified in lower case, similar to how it is in the provided PTF registry link.*
+====
+In case the issue has not been properly identified, a tentative fix may be provided as a TEST build first.
+This is applied using:
+[source,shell]
+----
+mgradm support ptf podman --test <TESTnumber> --user <accountID>
+----
+.Additional Information
+PTFs provided via registry.suse.com are only created for the account as identified by a provided SUSE Manager supportconfig (created using "mgradm support config").
+This data tar-ball is the required base information for a SUSE Manager support request. A supportconfig created directly on the SLE Micro instance running the container is not sufficient.
+endif::[]
