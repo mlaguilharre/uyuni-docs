@@ -1,3 +1,4 @@
+- Added How to apply a Program Temporary Fix (PTF) to a containerized SUSE Manager 5 in Server and Proxy sections.
 - Added SLE15 SP7 as supported client.
 - Updated Hub Online Synchronization section with the latest 
   UI changes in Large Deployment Guide 
